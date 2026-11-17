@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090d18">
+<title>Zi Ang — Your School Assistant</title>
+<style>
+:root{color-scheme:dark;--bg:#090d18;--panel:#111827;--panel2:#1b2638;--line:#29364b;--blue:#4388ff;--text:#eef4ff;--muted:#a6b3c8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:10px 14px;background:var(--blue);color:white;font-weight:650}button.secondary{background:var(--panel2);border:1px solid var(--line)}button:disabled{opacity:.5;cursor:not-allowed}
+.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}.sidebar{background:#0d1422;border-right:1px solid var(--line);padding:22px 16px}.brand{display:flex;align-items:center;gap:11px;font-size:20px;font-weight:800;margin-bottom:28px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#2878ff,#765bff);display:grid;place-items:center;font-size:22px}.nav{display:grid;gap:8px}.nav button{text-align:left;background:transparent;color:var(--muted);border:1px solid transparent}.nav button.active,.nav button:hover{background:var(--panel2);color:white;border-color:var(--line)}.small{font-size:12px;color:var(--muted);margin-top:25px}
+main{max-width:1000px;width:100%;margin:auto;padding:28px 30px 110px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:36px}.pill{font-size:12px;border:1px solid #24543e;color:#80e0a8;background:#10251c;padding:5px 10px;border-radius:30px}.hero{text-align:center;margin:50px auto 30px}.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.1;margin:0 0 12px}.hero p{color:var(--muted);margin:0}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:26px 0}.card,.tool{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:17px}.card button{width:100%;text-align:left;background:transparent;padding:0;color:var(--text)}.card b{display:block;margin:7px 0 2px}.card span,.muted{color:var(--muted);font-size:13px}.icon{font-size:22px}
+.chat{display:grid;gap:14px;margin:22px 0}.msg{max-width:85%;padding:13px 16px;border-radius:16px;background:var(--panel);border:1px solid var(--line);white-space:pre-wrap}.msg.user{justify-self:end;background:#183665;border-color:#28569a}.composer{position:fixed;bottom:0;left:250px;right:0;padding:16px 24px;background:linear-gradient(transparent,var(--bg) 20%)}.compose-inner{max-width:940px;margin:auto;display:flex;gap:9px;background:var(--panel);border:1px solid var(--line);padding:9px;border-radius:17px}.compose-inner textarea{resize:none;min-height:42px;max-height:130px;flex:1;background:transparent;border:0;outline:0;color:var(--text);padding:9px}.compose-inner button{align-self:end}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin:18px 0}.panel h2{margin-top:0}.field{width:100%;background:#0b1220;color:white;border:1px solid var(--line);border-radius:10px;padding:11px;margin:7px 0 14px}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.answer{padding:12px;background:#10251c;border:1px solid #24543e;border-radius:10px;margin-top:12px}.hidden{display:none}.notice{font-size:12px;color:var(--muted);margin-top:12px}
+@media(max-width:700px){.app{grid-template-columns:1fr}.sidebar{padding:12px 14px;border-right:0;border-bottom:1px solid var(--line)}.brand{margin:0}.nav{display:flex;overflow:auto;margin-top:12px}.nav button{white-space:nowrap;padding:8px 10px}.small{display:none}main{padding:20px 15px 115px}.hero{margin:35px auto 22px}.cards{grid-template-columns:1fr 1fr}.composer{left:0;padding:12px}.msg{max-width:94%}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+ <div class="brand"><div class="logo">🎓</div> Zi Ang</div>
+ <nav class="nav">
+  <button class="active" data-page="home">✦ New chat</button>
+  <button data-page="quiz">▤ Revision quiz</button>
+  <button data-page="math">＋ Maths calculator</button>
+  <button data-page="notes">▣ Revision notes</button>
+ </nav>
+ <p class="small">Your study companion<br>Learn • Practise • Improve</p>
+</aside>
+<main>
+ <div class="top"><strong id="pageTitle">Your learning space</strong><span class="pill">● Ready to study</span></div>
+ <section id="homePage">
+  <div class="hero"><h1>Hello! I'm <span style="color:#76aaff">Zi Ang.</span></h1><p>Your personal school assistant. What are we learning today?</p></div>
+  <div class="cards">
+   <div class="card"><button data-prompt="Help me with maths. Explain each step."><span class="icon">➗</span><b>Maths help</b><span>Work through problems</span></button></div>
+   <div class="card"><button data-prompt="Help me understand my English homework."><span class="icon">📚</span><b>English help</b><span>Reading and writing</span></button></div>
+   <div class="card"><button data-prompt="Help me revise history."><span class="icon">🌍</span><b>History help</b><span>Understand the past</span></button></div>
+   <div class="card"><button data-prompt="Help me practise a language."><span class="icon">🗣️</span><b>Languages</b><span>Practise vocabulary</span></button></div>
+   <div class="card"><button data-prompt="Make me a short revision quiz."><span class="icon">🧠</span><b>Revision quiz</b><span>Test what you know</span></button></div>
+   <div class="card"><button data-prompt="Help me make revision notes."><span class="icon">📝</span><b>Revision notes</b><span>Organise key facts</span></button></div>
+  </div>
+  <div class="row"><label class="secondary" style="padding:9px 12px;border-radius:10px;cursor:pointer">📷 Upload homework photo <input id="photo" type="file" accept="image/*" hidden></label><button class="secondary" id="voiceBtn">🎙️ Speak</button></div>
+  <div id="photoPreview" class="notice"></div>
+  <div id="chat" class="chat"><div class="msg">Hi! I'm Zi Ang. Tell me what you're studying, and I'll help you understand it step by step.</div></div>
+ </section>
+ <section id="quizPage" class="hidden">
+  <div class="panel"><h2>🧠 Quick revision quiz</h2><p class="muted">Choose a subject and practise with a starter question.</p><label>Subject</label><select class="field" id="subject"><option>Science</option><option>History</option><option>Maths</option><option>English</option><option>Geography</option></select><div id="question" style="font-weight:700;margin:12px 0">Which gas do plants take in during photosynthesis?</div><div id="answers" class="row"></div><div id="quizResult"></div><button class="secondary" style="margin-top:14px" id="nextQuestion">Next question</button></div>
+ </section>
+ <section id="mathPage" class="hidden">
+  <div class="panel"><h2>＋ Maths calculator</h2><p class="muted">Enter a calculation using +, −, ×, ÷ and brackets.</p><input class="field" id="calcInput" placeholder="e.g. (24 + 6) / 5"><button id="calculate">Calculate</button><div id="calcResult" class="answer hidden"></div></div>
+ </section>
+ <section id="notesPage" class="hidden">
+  <div class="panel"><h2>📝 Revision notes</h2><p class="muted">Write or paste your notes here. They stay in this page while it is open.</p><input class="field" id="noteTitle" placeholder="Topic title"><textarea class="field" id="noteText" rows="9" placeholder="Write your key facts here..."></textarea><button id="saveNote">Save note</button><div id="savedNotes"></div></div>
+ </section>
+ <p class="notice">Starter version: the chat screen is a demonstration until a secure AI service is connected. Do not enter passwords or private information.</p>
+</main>
+</div>
+<div class="composer" id="composer"><div class="compose-inner"><textarea id="message" placeholder="Ask Zi Ang about your schoolwork..." rows="1"></textarea><button id="send">Send ↑</button></div></div>
+<script>
+const $=id=>document.getElementById(id);
+function showPage(page){['home','quiz','math','notes'].forEach(p=>$(p+'Page').classList.toggle('hidden',p!==page));$('composer').classList.toggle('hidden',page!=='home');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('pageTitle').textContent={home:'Your learning space',quiz:'Revision quiz',math:'Maths calculator',notes:'Revision notes'}[page]}
+document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>showPage(b.dataset.page));
+document.querySelectorAll('[data-prompt]').forEach(b=>b.onclick=()=>{$('message').value=b.dataset.prompt;$('message').focus()});
+function addMsg(text,who='bot'){let d=document.createElement('div');d.className='msg '+(who==='user'?'user':'');d.textContent=text;$('chat').appendChild(d);d.scrollIntoView({behavior:'smooth',block:'nearest'})}
+function send(){let v=$('message').value.trim();if(!v)return;addMsg(v,'user');$('message').value='';addMsg("Thanks for your question! The Zi Ang chat interface is ready. Its live AI connection still needs to be securely added. For now, try the Maths Calculator or Revision Quiz.")}
+$('send').onclick=send;$('message').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}});
+$('calculate').onclick=()=>{let s=$('calcInput').value.trim();if(!/^[0-9+\-*/().\s]+$/.test(s)){ $('calcResult').textContent='Please enter a valid maths calculation.';}else{try{let result=Function('"use strict";return ('+s+')')();$('calcResult').textContent=Number.isFinite(result)?'Answer: '+result:'That calculation has no finite answer.'}catch{$('calcResult').textContent='Check the calculation and try again.'}}$('calcResult').classList.remove('hidden')};
+const qs=[['Which gas do plants take in during photosynthesis?',['Oxygen','Carbon dioxide','Nitrogen'],1],['What is 9 × 7?',['56','63','72'],1],['In which year did the First World War begin?',['1912','1914','1918'],1],['Which word is a verb?',['Quickly','Happiness','Run'],2]];
+let qi=0;function loadQ(){$('question').textContent=qs[qi][0];$('answers').innerHTML='';$('quizResult').textContent='';qs[qi][1].forEach((a,i)=>{let b=document.createElement('button');b.className='secondary';b.textContent=a;b.onclick=()=>{$('quizResult').textContent=i===qs[qi][2]?'Correct! Well done.':'Not quite. Have another look and try again.';$('quizResult').className='answer'};$('answers').appendChild(b)})}
+$('nextQuestion').onclick=()=>{qi=(qi+1)%qs.length;loadQ()};loadQ();
+$('saveNote').onclick=()=>{let t=$('noteTitle').value.trim(),n=$('noteText').value.trim();if(!t||!n){$('savedNotes').textContent='Add a title and some notes first.';return}let d=document.createElement('div');d.className='answer';let b=document.createElement('b');b.textContent=t;let p=document.createElement('p');p.textContent=n;d.append(b,p);$('savedNotes').prepend(d);$('noteTitle').value='';$('noteText').value=''};
+$('photo').onchange=e=>{let f=e.target.files[0];if(!f)return;$('photoPreview').textContent='Selected: '+f.name+' — photo upload preview only; image understanding will be added with the AI connection.'};
+$('voiceBtn').onclick=()=>{let SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert('Speech input is not supported in this browser. Try a supported browser.');return}let r=new SR();r.lang='en-GB';r.onresult=e=>{$('message').value=e.results[0][0].transcript};r.start()};
+</script>
+</body></html>
